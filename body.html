@@ -1,0 +1,956 @@
+<style>
+	body { background: url('./img/body-bg.png') repeat 50% 0% #333; color: #fff; }
+	#bg-overlay {
+	position:fixed;
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;
+	background: url('./img/stars-bg.jpg') no-repeat fixed;	
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	background-size: cover;
+	z-index:-2;
+	opacity:0.4;
+	}
+	#fire-fly-container {	
+	position:fixed;
+	height:100%;
+	width:100%;
+	top:0;
+	left:0;	
+	opacity:0.7;
+	z-index:-1;
+	padding:0;
+	margin:0;
+	}
+	.navbar
+	{
+	background-color: rgba(0,0,0, 0.2);	
+	border:none;
+	border-radius:0;		
+	position:absolute;
+	width:100%;
+	z-index:2;
+	border-bottom:1px solid #fff;
+	margin-bottom:0;
+	height:70px;
+	}
+	
+	
+	#ar 
+	{
+	position:absolute;
+	right:10px;
+	top:20%;
+	font-size:10px;
+	}
+	.active-state img 
+	{
+	max-height:80%;
+	margin-right:8px;
+	margin-top:-18px;
+	}
+	.active-state div
+	{
+	display:inline-block;
+	text-align:left;	
+	margin-top:15px;
+	line-height:15px;
+	}
+	
+	#controls-cont
+	{
+	background-color:rgba(0,0,0,0.4);
+	border:1px solid #000;
+	padding:10px;
+	padding-top:80px;
+	min-height:100vh;
+	text-align:center;	
+	}
+	#controls-cont h2 { font-family: 'Jura', sans-serif; }
+	#map-cont {
+	padding:10px;
+	padding-top:80px;
+	min-height:100vh;
+	position:relative;
+	overflow-x:hidden;
+	}
+	
+	.form-group label
+	{
+	width:90%;
+	}
+	
+	.inpStyle
+	{
+	padding:7px;
+	border-radius: 7px;
+	background-color: rgba(0,0,0,0.1);
+	border: 1px solid rgba(255,255,255,0.5);
+	color: rgba(255,255,255,0.9);			
+	transition: 0.2s;
+	width:90%;
+	}
+	.inpStyle:hover
+	{
+	background-color: rgba(0,0,0,0.6);
+	}
+	.inpStyle:focus
+	{
+	background-color: rgba(0,0,0,0.6);	
+	box-shadow: 0px 0px 15px 0px rgba(0,187,255,0.5);
+	outline:none;
+	}
+	input[type=number]::-webkit-inner-spin-button, 
+	input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+	}	
+	
+	#settingsContent
+	{
+	margin:0;
+	height:50vh;
+	overflow:hidden;
+	padding-right:8px;
+	margin-bottom:2px;
+	}
+	#settingsContent hr
+	{
+	width:90%;
+	}
+	#renderImage
+	{
+	border:2px solid #fff;
+	background:rgba(0,0,0,0.4);
+	padding:10px;
+	border-radius:5px;
+	margin-top:10px;
+	font-family: 'Jura', sans-serif;
+	font-weight:bold;
+	letter-spacing:3px;
+	font-size:17px;
+	width:90%;
+	transition:0.3s all;
+	}
+	#renderImage:hover
+	{
+	background:#fff;
+	color:#000;
+	}
+	#imgStatus
+	{
+	font-style:italic;
+	font-size:10px;
+	}
+	#img-box
+	{
+	padding-top:5%;
+	}
+	#img-box img
+	{
+	width:550px;
+	border: 5px solid #333;	
+	border-radius:15px;
+	box-shadow: 0px 0px 30px 5px rgba(0,187,255,0.5);
+	display: block;
+	}
+	#info-box
+	{
+	background:rgba(0,0,0,0.4);
+	border:2px solid rgba(255,255,255,0.5);
+	margin-top:25px;
+	padding:6px;
+	border-radius:5px;	
+	width:80%;	
+	margin-right:13%;
+	}
+	#info-box h4{ font-family: 'Jura', sans-serif;	 }
+	#info-box hr
+	{
+	border: 0;
+    height:1px;
+	margin:10px;	
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(255,255,255,0.8), rgba(0, 0, 0, 0));
+	}
+	#img-holder
+	{		
+	position:relative;
+	display: inline-block;	
+	zoom: 1;
+	margin-right:13%;
+	}	
+	
+	#imgStat
+	{
+	color:#99ff99;
+	}
+	.pull-right + .tooltip > .tooltip-inner	{background-color: #f00;}
+	.pull-right + .tooltip.right .tooltip-arrow {border-right: 5px solid red !important;}
+	
+	input + .tooltip > .tooltip-inner	{background-color: #fff; color:#000;}
+	input + .tooltip .tooltip-arrow {border-top: 5px solid #fff !important; }
+	
+	#quesBar
+	{
+	position:absolute;
+	top:calc(5% + 85px);
+	right:-260px;
+	width:385px;
+	height:385px;	
+	border-radius: 50%;
+	border:1px solid rgba(255,255,255,0.5);
+	background:rgba(0,0,0,0.1);	
+	transition:background 0.3s;
+	}
+	#quesBar:hover
+	{
+	background:rgba(0,0,0,0.4);
+	}
+	#qa
+	{
+	transform: rotate(90deg);
+	transform-origin: left top 0;
+	position:absolute;
+	right:-40px;
+	top:calc(5% + 235px);
+	font-family: 'Jura', sans-serif;
+	}
+	.circle
+	{
+	position:absolute;
+	width:140px;
+	height:140px;
+	border-radius:50%;
+	border:1px solid rgba(255,255,255,0.7);
+	background:rgba(0,0,0,0.3);	
+	color:#fff;
+	cursor:pointer;
+	text-align:center;
+	padding:10px;	
+	padding-top:35px;
+	font-size:13px;
+	transition:color 0.3s, background 0.3s;	
+	}
+	.circle b
+	{
+	text-decoration: underline;
+	font-style: italic; 
+	}
+	.circle:hover
+	{
+	color:#000;
+	background:#fff;
+	}
+	.modal {
+	text-align: center;
+	padding: 0!important;	
+	}
+	
+	.modal:before {
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	margin-right: -4px; /* Adjusts for spacing */
+	}
+	
+	.modal-dialog {
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
+	width:400px;
+	}	
+	.modal-content
+	{
+	border:1px solid rgba(255,255,255,0.7);
+	width:400px;
+	height:400px;
+	background:rgba(0,0,0,0.5);	
+	border-radius:50%;		
+	padding:30px;
+	text-align:center;
+	padding-right:47px;
+	padding-left:47px;
+	}
+	.modal .close
+	{
+	opacity:0.6;
+	color:#fff;
+	position:absolute;
+	top:-15px;
+	right:8px;
+	}
+	.modal a
+	{
+	text-decoration:underline;
+	color:#fff;
+	
+	}
+	.modal .close:hover
+	{
+	opacity:0.9;
+	}
+	.italics-underlined
+	{
+	text-decoration: underline;
+	font-style: italic; 
+	}
+	#walkthrough-content {
+	display: none;
+	}
+</style>
+<div id="bg-overlay"></div>
+<div id="fire-fly-container"></div>
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">					
+			<div class="navbar-brand">	
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>                        
+				</button>	
+			</div>					
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">					
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="javascript:void(0)" onclick="$('body').pagewalkthrough('show');"><i class="fa fa-question-circle"></i> Help</a></li>
+				<li><a href="javascript:void(0)" onclick="$('#contact').modal('show');"><i class="fa fa-bug"></i> Report Bug / Contact</a></li>		
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3" id="controls-cont"><center><h2>Control Panel</h2></center>
+			<hr>
+			<div id="settingsContent"><center>
+				<div class="form-group">
+					<label for="fert"><span class="pull-left">Increase fertilizer run-off</span><span class="pull-right" data-toggle="tooltip" data-placement="right" title="Percentage">%</span></label>	
+					<input id="fert" class="inpStyle" type="number" value="0"> 
+				</div>
+				<div class="form-group">
+					<label for="temp"><span class="pull-left">Average Temperature</span><span class="pull-right" data-toggle="tooltip" data-placement="right" title="Degree Celsius">&#8451;</span></label>	
+					<input id="temp" class="inpStyle" type="number" value="28"> 
+				</div>
+				<div class="form-group">
+					<label for="pH"><span class="pull-left">pH Level</span></label>	
+					<input id="pH" class="inpStyle" type="number" value="7.8">
+				</div>
+				<div class="form-group">
+					<label for="phos"><span class="pull-left">Phosphorus Content</span><span class="pull-right" data-toggle="tooltip" data-placement="right" title="Mili-gram per Litre">mg/L</span></label>	
+					<input id="phos" class="inpStyle" type="number" value="0.088">
+				</div>
+				<div class="form-group">
+					<label for="sal"><span class="pull-left">Salinity</span><span class="pull-right" data-toggle="tooltip" data-placement="right" title="Gram per Litre">g/L</span></label>	
+					<input id="sal" class="inpStyle" type="number" value="32">
+				</div>
+				<div class="form-group">
+					<label for="light"><span class="pull-left">Light intensity</span><span class="pull-right" data-toggle="tooltip" data-placement="right" title="Lumen per meter square">lux</span></label>	
+					<input id="light" class="inpStyle" type="number" value="90000">
+				</div>							
+				<br>	
+			</center></div><!-- Settings content end -->
+			<hr>
+			<span id="imgStatus">Image Status: <b id="imgStat">Up to Date &nbsp;<i class="fa fa-thumbs-o-up fa-lg"></i></b><br></span>
+			<button id="renderImage" onclick="changesInit()">Apply Changes</button>
+			<br><br><br>
+			<b>Copyright © Simran Singh 2016</b>
+		</div>
+		<div class="col-md-9" id="map-cont">		    
+			<div id="img-box" class="col-md-12"><center><!-- IMG-BOX -->
+				<div id="img-holder">
+					<img class="img-responsive" id="sat-img">
+				</div><br>			
+				<div id="info-box">
+					<h4><strong>Info</strong></h4><hr><br>
+					<div class="row">
+						<div class="col-md-6" style="line-height:25px;">
+							<span class="pull-left">Latitude</span><strong class="pull-right" id="lat">Hover over Image</strong><br>
+							<span class="pull-left">Algae Level</span><strong id="lvl" class="pull-right">Hover over Image</strong><br>
+						</div>
+						<div class="col-md-6" style="line-height:25px;">
+							<span class="pull-left">Longitude</span><strong id="lng" class="pull-right">Hover over Image</strong><br>
+							<span class="pull-left">Terrain Type</span><strong id="terType" class="pull-right">Hover over Image</strong><br>
+						</div>
+					</div>
+				</div><!-- Info-box content end -->
+			</center></div><!-- Img-box content end -->	
+			
+			<div id="quesBar">				
+				<div class="circle" id="q1">Relation between algal growth and <b>temprature</b></div>
+				<div class="circle" id="q2">Relation between algal growth and <b>pH scale</b> of water</div>
+				<div class="circle" id="q3">Relation between algal growth and <b>phosphorus</b> level in water</div>	
+				<div class="circle" id="q0">Why do <b>fertilizer run-off</b> affetcs only algae near surface?</div>
+				<div class="circle" id="q4">Relation between algal growth and <b>salinity</b> of water</div>
+				<div class="circle" id="q5">Relation between algal growth and <b>light intensity</b></div>				
+			</div>
+			<h2 id="qa">Q/A</h2>
+		</div>		
+	</div>  
+</div>
+
+
+
+<div id="aq0" class="modal fade" role="dialog">
+	<div class="modal-dialog">		
+		<div class="modal-content">			
+			<div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<br><b>Why do <span class="italics-underlined">fertilizer run-off</span> affetcs only algae near surface?</b>
+				<br><br><br>
+				<p>
+					Fertilizer run-off only affects algae near surface because the run-offs from surface are not able to reach away from surface because it is either absorbed by algae near surface or is either neutralized by the time it gets away from surface.
+				</p>
+			</div>			
+		</div>		
+	</div>
+</div>
+<div id="aq1" class="modal fade" role="dialog">
+	<div class="modal-dialog">		
+		<div class="modal-content">			
+			<div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<br><b>Relation between algal growth and <span class="italics-underlined">temprature</span></b>
+				<br><br><br>
+				<p>
+					Algae dont survive below 7&#8451; and the algal growth is limited below 11&#8451;. Algal growth rate increases linearly from 11&#8451; to 33&#8451; after 33&#8451; the growth drops till 38&#8451; after which algae can't survive.
+				</p>
+			</div>			
+		</div>		
+	</div>
+</div>
+<div id="aq2" class="modal fade" role="dialog">
+	<div class="modal-dialog">		
+		<div class="modal-content">			
+			<div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<br><b>Relation between algal growth and <span class="italics-underlined">pH Scale</span> of water</b>
+				<br><br><br>
+				<p>
+					Algae can't survive in both too alkaline or too acidic water. When pH level of water is below 4 or more than 10 then algal growth is prohibited. Maximum algal growth is attained at 7.8. Water should be a little alkaline to increase growth rate.
+				</p>
+			</div>			
+		</div>		
+	</div>
+</div>
+<div id="aq3" class="modal fade" role="dialog">
+	<div class="modal-dialog">		
+		<div class="modal-content">			
+			<div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<br><b>Relation between algal growth and <span class="italics-underlined">phosphorus</span> level in water</b>
+				<br><br><br>
+				<p>
+					Algal growth is prohibited when phosphorus level is less than 0.035 mg/L, after which algal growth rate linearly increases upto phosphorus level of 3.5 mg/L after 3.5 mg/L the phosphorus content becomes harmful for algae and the growth rates drop after it.
+				</p>
+			</div>			
+		</div>		
+	</div>
+</div>
+<div id="aq4" class="modal fade" role="dialog">
+	<div class="modal-dialog">		
+		<div class="modal-content">			
+			<div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<br><b>Relation between algal growth and <span class="italics-underlined">salinity</span> of water</b>
+				<br><br><br>
+				<p>
+					Algal growth rate increases linearly from 0 g/L of salinity to 40 g/L of salinity after which the growth rate drops.
+				</p>
+				<br>
+				<strong><i>*No specific ranges were found for salinity affecting algal growth so these assumed values are being used</i></strong>
+			</div>			
+		</div>		
+	</div>
+</div>
+<div id="aq5" class="modal fade" role="dialog">
+	<div class="modal-dialog">		
+		<div class="modal-content">			
+			<div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<br><b>Relation between algal growth and <span class="italics-underlined">light intensity</span></b>
+				<br><br><br>
+				<p>
+					Algal growth increases linearly from 0 <a target="_blank" href="https://en.wikipedia.org/wiki/Lux">lux</a> to 90,000 <a target="_blank" href="https://en.wikipedia.org/wiki/Lux">lux</a>. Algal growth is constant between 90,000 <a target="_blank" href="https://en.wikipedia.org/wiki/Lux">lux</a> and 100,000 <a target="_blank" href="https://en.wikipedia.org/wiki/Lux">lux</a> after which light intensity damages cells of algae and thus the growth rate drops after 100,000 <a target="_blank" href="https://en.wikipedia.org/wiki/Lux">lux</a>.
+				</p>
+			</div>			
+		</div>		
+	</div>
+</div>
+
+<div id="contact" class="modal fade" role="dialog">
+	<div class="modal-dialog">		
+		<div class="modal-content">			
+			<div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<br><b><span class="italics-underlined">Report Bug / Contact</span></b>
+				<br><br><br>
+				<p>
+					If you wish to report bug(s) or contact the developer of this app then please contact on the following email, <b><a href="mailto:simran.singh2198@gmail.com">simran.singh2198@gmail.com</a></b> 
+				</p>
+			</div>			
+		</div>		
+	</div>
+</div>
+
+<div id="walkthrough-content">
+	<div id="walkthrough-1">
+        <h1>Welcome to <b>Project Vision</b></h1>
+		
+		<p>This is a web-based application that tries to predict algae level in the Bay of Bengal according to data provided by user using a interactive control panel</p>
+        <p>This is a tour that will tell you how to operate this application</p>
+        <p>Click next to continue the tour</p>
+	</div>
+	
+	<div id="walkthrough-2">
+        This is the image where all the prediction will be reflected when you will click 'Apply Changes' button.
+	</div>
+	
+	<div id="walkthrough-3">
+        This is the control panel where you can change the conditions that will affect the algal growth.
+	</div>
+	
+	<div id="walkthrough-4">
+        You <b>need</b> to click this button after making changes in control panel to see changes in the image.
+	</div>
+	
+	<div id="walkthrough-5">
+        You can see information about the point that you are hovering on, in the image, in this box when you hover on the image.
+	</div>
+	
+	<div id="walkthrough-6">
+        <p>This is Q/A area! Here you can click on questions and find thier answers. This is a smart question viewer and the question in it changes automatically according to the data that you are editing in control panel.</p>
+		<p>This is the end of tour.</p>
+		<p>Get ready start predecting the algal levels in Bay of Bengal!</p>
+	</div>
+</div>
+
+
+<script src="./js/pagewalkthrough.js"></script>
+<script src="./js/firefly.js"></script>
+<script>
+	$("document").ready(function(){		
+		var block = $(".circle").get(),
+		increase = Math.PI * 2 / block.length,
+		x = 0, y = 0, angle = 0;		
+		for (var i = 0; i < block.length; i++) {
+			var elem = block[i];
+			x = Math.round((192 * Math.cos(angle) - 70)+ 192.5);
+			y = Math.round((192 * Math.sin(angle) - 70)+ 192.5);
+			elem.style.position = 'absolute';
+			elem.style.left = x + 'px';
+			elem.style.top = y + 'px';			
+			var sc = 1- Math.abs((3.14159- angle)/3.14159).toFixed(2);
+			if(sc == 1){ elem.isMain = 1; }
+			$(elem).animate({ScProperty: ( sc == 1 ? 1 : sc-0.001)}, 2);
+			elem.style.transform = "scale("+ ( sc == 1 ? 1 : sc-0.001) +")";			
+			angle += increase;
+		}
+		$('body').pagewalkthrough({
+			name: 'introduction',
+			steps: [{
+				popup: {
+					content: '#walkthrough-1',
+					type: 'modal'
+				}
+				}, {
+				wrapper: '#img-holder',
+				popup: {
+					content: '#walkthrough-2',
+					type: 'tooltip',
+					position: 'bottom'
+				}
+				}, {
+				wrapper: '#settingsContent',
+				popup: {
+					content: '#walkthrough-3',
+					type: 'tooltip',
+					position: 'right'
+				}
+				}, {
+				wrapper: '#renderImage',
+				popup: {
+					content: '#walkthrough-4',
+					type: 'tooltip',
+					position: 'right'
+				}
+				}, {
+				wrapper: '#info-box',
+				popup: {
+					content: '#walkthrough-5',
+					type: 'tooltip',
+					position: 'top'
+				}
+				}, {
+				wrapper: '#quesBar',
+				popup: {
+					content: '#walkthrough-6',
+					type: 'tooltip',
+					position: 'left'
+				}
+			}]
+		});
+		$("#sat-img").attr('src', './img/main.png').on('load', function() {
+			$("<img />").attr('src', './img/main.png').on('load', function() {
+				var canv =  $('<canvas />')[0];
+				canv.width = 481;
+				canv.height = 336;
+				var conte = canv.getContext('2d');
+				conte.drawImage(this, 0, 0, 481, 336);
+				baseData = conte.getImageData(0,0,481,336);
+			});		
+			if($("#layer").css('display') != 'none')setTimeout(function(){ $("#layer").fadeOut(650);  $('body').pagewalkthrough('show'); }, 1000);
+		});
+		
+	});
+	function getRotationDegrees(obj) {
+		var matrix = obj.css("-webkit-transform") ||
+		obj.css("-moz-transform")    ||
+		obj.css("-ms-transform")     ||
+		obj.css("-o-transform")      ||
+		obj.css("transform");
+		if(matrix !== 'none') {
+			var values = matrix.split('(')[1].split(')')[0].split(',');
+			var a = values[0];
+			var b = values[1];
+			var angle = Math.round(Math.atan2(b, a) * (180/Math.PI));
+		} else { var angle = 0; }
+		return (angle < 0) ? angle + 360 : angle;
+	}
+	function getTransformValue(element,property){       
+        var values = element[0].style.transform.split(")");
+        for (var key in values){
+            var val = values[key];              
+            var prop = val.split("(");          
+            if (prop[0].trim() == property)
+			return prop[1];
+		}                   
+        return false;           
+	}
+	$(".circle").click(function(ev){		
+		if(ev.target.isMain	!= 1)
+		{
+			$( ".circle" ).each(function( i ) { this.isMain = null; });
+			ev.target.isMain = 1;
+			var cu = $( ".circle" ).index( $(this) );
+			var rot = 180 - (cu*60);					
+			$('#quesBar').animate(
+			{				
+				myRotationProperty: rot
+			},
+			{
+				step: function(now, tween) {					
+					$(this).css('-webkit-transform','rotate('+now+'deg)');
+					$(this).css('-moz-transform','rotate('+now+'deg)'); 						
+					$(this).css('transform','rotate('+now+'deg)'); 		
+				}
+			});
+			$( ".circle" ).each(function( i ) { 
+				var cp = Math.abs(cu - i);
+				var sc;
+				if(cp == 0)sc = 1;
+				else if(cp == 1 || cp == 5)sc =  0.6699999999999999			
+				else sc = 0.32999999999999996;
+				$(this).animate(
+				{				
+					myRotationProperty: -rot,
+					ScProperty: sc
+				},
+				{
+					step: function(now, tween) {					
+						if(tween.prop === "myRotationProperty") {												
+							$(this).css('transform','rotate('+now+'deg)');						
+						}
+						else
+						{ 
+							var t = getRotationDegrees($(this));
+							$(this).css('transform','scale('+now+') rotate('+t+'deg)');			
+							
+						}
+					}
+				}
+				);
+			});
+			
+		}
+		else $("#aq"+$(this).attr("id").substr(1)).modal('show');
+		
+	});
+	$.firefly({
+		color: '#fff',
+		minPixel: 1,
+		maxPixel: 2,
+		total : 30,
+		twinkle: 0.5,
+		on : '#fire-fly-container'
+	});
+	$('[data-toggle="tooltip"]').tooltip(); 
+	$("#settingsContent").niceScroll({
+		cursorcolor:"#fff",
+		horizrailenabled: false,
+		cursorborder: "none",
+		cursorborderradius: 2,
+		cursorwidth: "5px",
+		zindex: 5,
+		cursoropacitymin:0.4
+	});		
+	
+	// ------------------------ MAIN PART ---------------------------------
+	var colorBook =  $('<canvas />')[0], highest = 32.906;
+	colorBook.width = 101;
+	colorBook.height = 1;
+	var ctx=colorBook.getContext("2d");				
+	var grd=ctx.createLinearGradient(0,0,101,0);
+	grd.addColorStop(0,"rgb(0,191,255)");
+	grd.addColorStop(0.5,"rgb(0,128,0)");
+	grd.addColorStop(1,"rgb(255,255,0)");				
+	ctx.fillStyle=grd;
+	ctx.fillRect(0,0,101,1);
+	var colBook = ctx.getImageData(0,0,101,1).data;
+	delete colorBook;
+	delete ctx;
+	delete grd;	
+	var baseData;
+	
+	function getPercent(r, g, b)
+	{
+		var fr, to;
+		if(r == 0){ fr = 0; to = 51; }
+		else { fr = 51; to = 101; }
+		var percent, diff = 99; 
+		for(var i = fr; i < to; i++)
+		{
+			var loc = i * 4;
+			comp = r == 0 ? Math.abs(colBook[loc + 2] - b) :  Math.abs(colBook[loc] - r);
+			if(comp < diff)
+			{
+				diff = comp;
+				percent = i;
+			}			
+		}
+		return percent < 3 ? 0 : percent;
+	}
+	
+	function updateImage(percent, fert)
+	{	
+		if(fert < 1)fert = 0;
+		var canv = $('<canvas />')[0], ctx = canv.getContext('2d'), edata = ctx.createImageData(481, 336), exdata = edata.data;		
+		exdata.set(baseData.data);
+		canv.width = 481;
+		canv.height = 336;	
+		var l = exdata.length;
+		function step(i)
+		{
+			if(i < l)
+			{		
+				for(var j = i + 15000; i < j && i < l; i += 4)
+				{
+					if(exdata[i] != 0 || exdata[i+1] != 0 || exdata[i+2] != 0)
+					{
+						var cp =  getPercent(exdata[i], exdata[i+1], exdata[i+2]);						
+						var p = cp + ~~( (( percent * cp) / 100)*2);
+						if(cp > 13) p+= fert;
+						if(p < 0 || isNaN(p))p = 0;
+						var loc = (p > 100 ? 100 : p)*4;
+						exdata[i] = colBook[loc];
+						exdata[i+1] = colBook[loc+1];
+						exdata[i+2] = colBook[loc+2];						
+					}
+				}
+				setTimeout(step,0,i+4);
+			}
+			else
+			{				
+				ctx.putImageData(edata,0,0);
+				document.getElementById("sat-img").src = canv.toDataURL("image/png");
+				document.getElementById("sat-img").canvas = null;
+				$("#imgStat").html("Up to Date &nbsp;<i class='fa fa-thumbs-o-up fa-lg'></i>").css('color', '#99ff99');
+			}
+		}
+		setTimeout(step,0,0);
+	}	
+	function changesInit()
+	{		
+		var tar = null;
+		if($("#fert").val() == "")
+		{			
+			tar = $("#fert");
+		}
+		else if($("#temp").val() == "")
+		{			
+			tar = $("#temp");
+		}
+		else if($("#phos").val() == "")
+		{			
+			tar = $("#phos");
+		}	
+		else if($("#pH").val() == "")
+		{			
+			tar = $("#pH");
+		}
+		else if($("#sal").val() == "")
+		{			
+			tar = $("#sal");
+		}
+		else if($("#light").val() == "")
+		{			
+			tar = $("#light");
+		}
+		if(tar != null)
+		{			
+			$('#settingsContent').animate({
+				scrollTop: tar.offset().top - $('#settingsContent').offset().top
+				}, 400, function(){
+				tar.tooltip({
+					trigger:'manual',
+					title: 'This field cannot be empty!'
+				});
+				tar.tooltip('show');	
+				setTimeout(function() { tar.tooltip('destroy'); }, 2000);
+			}
+			);
+			return;
+		}
+		var per = 0, value =  parseInt( $("#temp").val() );	
+		
+		// temprature check :
+		if( value < 7 || value > 38) 	{ updateImage(-100); return; }
+		else if(value < 11)per = -30;
+		else if(value < 33)
+		{
+			per = (value - 28)*3;
+		}
+		else
+		{
+			per = - ~~(((value - 32)+1)*10);
+		}
+		
+		// pH level check : 
+		value = parseFloat( $("#pH").val() );	
+		if(value < 1 || value > 14)
+		{
+			$('#settingsContent').animate({
+				scrollTop: $("#pH").offset().top - $('#settingsContent').offset().top
+				}, 400, function(){
+				$("#pH").tooltip({
+					trigger:'manual',
+					title: 'Invalid Value! pH level is measured on scale between 1 - 14'
+				});
+				$("#pH").tooltip('show');	
+				setTimeout(function() { $("#pH").tooltip('destroy'); }, 3500);
+			}
+			);
+			return;
+		}
+		if(value < 4 || value > 10)
+		{
+			updateImage(-100); 
+			return;			
+		}
+		if(value <= 7.8 && value >= 7.6)
+		{
+			per += ~~(Math.abs(value - 7.8)*11);
+		}
+		else per -= ~~(Math.abs(value - 7.8)*11);
+		
+		// phosphorus level check : 
+		value = parseFloat( $("#phos").val() );
+		if(value < 0.035 || value > 4)
+		{
+			updateImage(-100); 
+			return;
+		}
+		if(value > 3.5)
+		{
+			per -= (value - 3.4)*30;
+		}else per += ~~( (value - 0.088)*20);
+		
+		// salinity check:
+		value = parseInt( $("#sal").val() );
+		if(value != 32)
+		{
+			if(value < 32)
+			{
+				per -= (32 - value);
+			}
+			else if(value < 41)
+			{
+				per += (value - 32);
+			}
+			else per = ~~((per + 8) - ((value - 40)*2));
+		}
+		
+		
+		//light level check :
+		value = parseInt($("#light").val());
+		if(value < 0 || value > 130000)
+		{
+			updateImage(-100); 
+			return;
+		}
+		if(value < 90000)
+		{
+			per -= ~~((90000 - value) / 900);
+		}
+		else if(value > 100000)
+		{
+			per -= ~~((value - 100000) / 300);
+		}	
+		$("#imgStat").html("Applying Changes &nbsp;<i class='fa fa-circle-o-notch fa-lg fa-spin'></i>").css('color', '#ffff99');
+		updateImage(per,  parseInt( $("#fert").val() ));
+		highest = highest + ((highest * per)/100);
+	}
+	
+	
+	$('#sat-img').mousemove(function(e) {
+		if(!this.canvas) {          
+			this.canvas = $("<canvas />")[0];			
+			this.canvas.width = this.width;
+			this.canvas.height = this.height;
+			this.canvas.getContext('2d').drawImage(this, 0, 0, this.width, this.height);
+		}             
+		var pixelData = this.canvas.getContext('2d').getImageData(event.offsetX, event.offsetY, 1, 1).data;		
+		$("#lng").html((79.0208 + (event.offsetX*0.037)).toFixed(4));
+		$("#lat").html((22.9792 - (event.offsetY*0.037)).toFixed(4));
+		if(pixelData[0] == 0 && pixelData[1] == 0 && pixelData[2] == 0)
+		{
+			$("#terType").html("Land");
+			$("#lvl").html("N/A");
+		}
+		else
+		{
+			$("#terType").html("Water");
+			$("#lvl").html(((getPercent(pixelData[0], pixelData[1], pixelData[2]) *  highest) / 100).toFixed(2));
+		}        
+	});
+	
+	$("input[type='number']").keypress(function() {
+		setTimeout(function(sel){
+			if(sel.prev != $(sel).val())
+			{
+				$("#imgStat").html("Needs to be updated &nbsp;<i class='fa fa-thumbs-o-down fa-lg'></i>").css('color', '#ff6666');	
+				sel.prev = $(sel).val();
+			}
+		}, 2, this);
+	});	
+	
+	$("input").focus(function(){		
+		var i = $( "input" ).index( $(this));
+		if(document.getElementById("q"+i).isMain != 1)
+		{
+			$("#q"+ i).click();			
+		}		
+	});
+	
+	$( window ).resize(function() {
+		
+		document.getElementById("sat-img").canvas = null;
+	});	
+	
+	
+</script>				

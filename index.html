@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Project Vision</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="./img/favicon.ico">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/normalize.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+	<link rel="stylesheet" href="./css/pagewalkthrough.css">
+
+<style>
+html, body
+{
+	height: 100%;
+	width: 100%;
+	padding:0;
+	margin:0;
+}
+#layer {
+    background: #333 url('./img/loading.gif') no-repeat 50% 70%;
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index:9999;
+}
+#layer-inside
+{	
+	font-size:30px;	
+	font-family: 'Qwigley', cursive;
+	position: absolute;
+	top:30%;
+	width:100%;	
+	color: rgba(255,255,255, 0.55);
+}
+</style>
+</head>
+<!--[if lt IE 9 ]>
+<script>
+var ie = true;
+</script>
+<![endif]--> 
+<body>
+<link href='https://fonts.googleapis.com/css?family=Qwigley' rel='stylesheet' type='text/css'>
+<div id="layer">
+	<div id="layer-inside">	
+		<center>
+		<font style="color: rgba(255,255,255, 0.8); font-size:60px;">Project Vision</font><br>
+		A Future Vision to Algae of Bay of Bengal
+		</center>
+	</div>
+</div>
+<!-- javascript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/js/tooltip.min.js"></script>
+<script src="./js/nicescroll.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Jura' rel='stylesheet' type='text/css'>
+<script>
+$(document).ready( 
+  function() {
+    $("html").niceScroll({
+		cursorcolor:"#228DFF",
+		horizrailenabled: false,
+		cursorborder: "none",
+		cursorborderradius: 2,
+		cursorwidth: "5px",
+		zindex: 9999
+	});
+  }
+);
+
+$(window).load(function(){
+	$.get( "./body.html", function( data ) {
+		$("body").append(data);
+	});
+});
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-60268647-3', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<div id="main-container"></div>
+</body>
+</html>
