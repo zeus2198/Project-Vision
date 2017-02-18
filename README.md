@@ -7,7 +7,7 @@ The UI of the app is absolutely stunning and this is one of the best UI's design
 _The app UI is designed for desktop size screens and may not look so appealing in mobiles/phones however the app will work on both platforms._
 
 ## Demo
-_Coming soon_
+### [https://xxxzeus.github.io/vision/](https://xxxzeus.github.io/vision/)
 
 ## List of factors affecting algae that can be modified by user
 * Fertilizer run-off from land
